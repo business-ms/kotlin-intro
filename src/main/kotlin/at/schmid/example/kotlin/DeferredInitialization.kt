@@ -1,7 +1,8 @@
 package at.schmid.example.kotlin
 
 /**
- * Demonstrates object declarations (a.k.a. Singletons), deferred initialization of read-only values, deferred initialization of non-nullable variables.
+ * Demonstrates object declarations (a.k.a. Singletons), deferred initialization of read-only values, private primary constructors and deferred initialization of
+ * non-nullable variables.
  *
  * @author Michael Schmid
  */
@@ -16,10 +17,10 @@ object ExpensiveSingleton {
     }
 }
 
-class Name {
+class Name private constructor() {
 
-    lateinit var given: String // Needs to be initializes before first use, otherwise an UninitializedPropertyAccessException will be thrown.
-    lateinit var family: String
+    lateinit var given: String // Allows us to use non-nullable types without initialization. Needs to be initializes before first use, otherwise an
+    lateinit var family: String // UninitializedPropertyAccessException will be thrown.
 
     companion object {
 
@@ -35,7 +36,10 @@ class Name {
 }
 
 fun main() {
-
     println(ExpensiveSingleton.eagerProperty)
     println(ExpensiveSingleton.expensiveProperty)
+
+    val name = Name.fromString("Peter Pan")
+
+    println(name.family)
 }

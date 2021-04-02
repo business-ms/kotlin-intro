@@ -1,8 +1,11 @@
 package at.schmid.example.kotlin
 
+import java.util.function.BiConsumer
+import java.util.function.BiFunction
+
 /**
  * Demonstrates data classes, one-line methods with return type inference, string interpolation, companion objects and their methods, safe collection access and lambda
- * expressions, top level variables/constants/methods and named parameters.
+ * expressions, top level variables/constants/methods, named parameters and inheritance.
  *
  * @author Michael Schmid
  */
@@ -15,7 +18,7 @@ data class PostalAddress2(
 
     fun format() = "$streetLine\n$zipCode $city\n${countryCode?.toLowerCase()}"
 
-    companion object {
+    companion object: BiFunction<String, Char, PostalAddress2> {
 
         // Assumed input: "Fürstenweg 1;6020;Innsbruck;AT
         fun parse(address: String, separator: Char = ';'): PostalAddress2 {
@@ -23,6 +26,8 @@ data class PostalAddress2(
 
             return PostalAddress2(tokens[0], tokens.elementAtOrElse(1) { "6020" }, tokens.elementAtOrElse(2) {"Innsbruck"}, tokens.elementAtOrNull(3))
         }
+
+        override fun apply(address: String, separator: Char) = parse(address, separator)
     }
 }
 

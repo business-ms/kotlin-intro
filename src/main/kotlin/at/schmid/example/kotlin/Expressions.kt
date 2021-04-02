@@ -26,12 +26,6 @@ fun chooseStreamingProvider(favoriteCategory: String): StreamingProvider? {
     }
 }
 
-fun printChoice(category: String) {
-    chooseStreamingProvider(category)?.let {
-        println("You like $category, you should choose $it.")
-    }
-}
-
 fun printChoiceWithFallback(category: String) {
     val choice = chooseStreamingProvider(category) ?: StreamingProvider.NETFLIX
 
@@ -68,7 +62,9 @@ fun main() {
     val categories = listOf("star wars", "series", "car shows", "movies")
 
     for(category in categories) {
-        printChoice(category)
+        chooseStreamingProvider(category)?.let {
+            println("You like $category, you should choose $it.")
+        }
     }
     categories.forEach { printChoiceWithFallback(it) }
 
