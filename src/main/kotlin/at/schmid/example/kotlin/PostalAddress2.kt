@@ -1,6 +1,5 @@
 package at.schmid.example.kotlin
 
-import java.util.function.BiConsumer
 import java.util.function.BiFunction
 
 /**
