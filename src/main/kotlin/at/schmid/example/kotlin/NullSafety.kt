@@ -11,13 +11,13 @@ import java.time.LocalDate
 
 class PatientName(var firstName: String? = null, var lastName: String? = null)
 
-class Patient {
+class Patient() {
 
     var name: PatientName? = null
     var gender: String? = "unknown"
     var dateOfBirth: LocalDate? = null
 
-    constructor(name: PatientName?) {
+    constructor(name: PatientName?): this() {
         this.name = name
         this.dateOfBirth = LocalDate.now()
     }
