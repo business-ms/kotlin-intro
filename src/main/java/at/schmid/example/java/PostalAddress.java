@@ -53,4 +53,8 @@ public final class PostalAddress {
     public String getCountryCode() {
         return countryCode;
     }
+
+    public String getCityLine() {
+        return String.format("%s %s", getZipCode(), getCity());
+    }
 }
