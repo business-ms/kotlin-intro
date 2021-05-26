@@ -3,8 +3,7 @@ package at.schmid.example.kotlin
 import java.time.LocalDate
 
 /**
- * Demonstrates more advanced scenarios concerning null-safety, secondary constructors, smart casts, null-safe String extension functions and usage of Java 8 date/time
- * types.
+ * Demonstrates more advanced scenarios concerning null-safety, secondary constructors, smart casts and null-safe String extension functions.
  *
  * @author Michael Schmid
  */
@@ -41,6 +40,20 @@ fun initializePatients(): List<Patient?> {
 fun printPatient(any: Any?) {
     if(any is Patient) {
         println(formatPatient(any)) // Type and null checks both result in a smart cast.
+        println()
+    }
+}
+
+fun printWithScopeFunction(list: List<Any?>) {
+    for(item in list) {
+        item?.let {
+            /* "it" is the implicit lambda argument of all scope functions and single-element lambda expressions. */
+            if(it is Patient) {
+                println(formatPatient(it))
+            } else {
+                println(it)
+            }
+        }
     }
 }
 
@@ -49,8 +62,15 @@ fun main() {
 
     for(patient in patients) {
         println(formatPatient(patient))
+        println()
     }
-    for(item in listOf("A String", patients.first(), 23, false, patients.last(), null)) {
+    println("Output with a heterogeneous list:\n")
+
+    val list = listOf("A String", patients.first(), 23, false, patients.last(), null)
+
+    for(item in list) {
         printPatient(item)
     }
+    println("Output filtering with scope function:\n")
+    printWithScopeFunction(list)
 }
